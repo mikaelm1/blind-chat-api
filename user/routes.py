@@ -8,6 +8,22 @@ def root():
 	print("Hitting the root")
 	return jsonify({"result": {"message": "You have reached the root"}})
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+	print("Request in login route: " + str(request.form))
+	username = request.form.get('username')
+	password = request.form.get('password')
+	if username and password:
+		user = User.query.filter_by(username=username).first()
+		if user and user.username == username:
+			return jsonify({"response": "Successfully logged in"}), 200
+		else:
+			return 404 
+	return 500
+
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 	print("Request in register route: " + str(request.form))

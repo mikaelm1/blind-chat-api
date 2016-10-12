@@ -3,7 +3,7 @@ from flask_socketio import emit
 
 from application import socketio
 
-users = {"user1": "Mike", "user2": "Ashley", "user3": "Becca"}
+users = ["user1", "user2", "user3"]
 
 @socketio.on('connect')
 def connect():
