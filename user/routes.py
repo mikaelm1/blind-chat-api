@@ -16,7 +16,7 @@ def login():
 	password = request.form.get('password')
 	if username and password:
 		user = User.query.filter_by(username=username).first()
-		if user and user.username == username:
+		if user and user.username == username and user.password == password:
 			return jsonify({"response": "Successfully logged in"}), 200
 		else:
 			return 404 
