@@ -5,6 +5,7 @@ import flask
 from flask_script import Manager, Server 
 from flask_migrate import MigrateCommand 
 from application import app, socketio 
+from settings import SERVER_HOST 
 
 manager = Manager(app)
 manager.add_command("db", MigrateCommand)
@@ -12,7 +13,7 @@ manager.add_command("db", MigrateCommand)
 @manager.command
 def run():
     socketio.run(app,
-                 host='localhost',
+                 host=SERVER_HOST,
                  port=5000,
                  debug=True,
                  use_reloader=True)
