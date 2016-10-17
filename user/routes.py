@@ -1,4 +1,4 @@
-from flask import jsonify, request  
+from flask import jsonify, request, session  
 from sqlalchemy.exc import IntegrityError
 from application import app, db 
 from user.models import User
@@ -12,6 +12,7 @@ def root():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	print("Request in login route: " + str(request.form))
+	print("SESSION: " + str(session))
 	username = request.form.get('username')
 	password = request.form.get('password')
 	if username and password:
