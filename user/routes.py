@@ -16,10 +16,16 @@ def login():
 	password = request.form.get('password')
 	if username and password:
 		user = User.query.filter_by(username=username).first()
-		if user and user.username == username and user.password == password:
+		if user.authenticated(password):
+			print("Password matches")
 			return jsonify({"response": "Successfully logged in"}), 200
 		else:
+			print("Password doesn't match")
 			return 404 
+		# if user and user.username == username and user.password == password:
+		# 	return jsonify({"response": "Successfully logged in"}), 200
+		# else:
+		# 	return 404 
 	return 500
 
 

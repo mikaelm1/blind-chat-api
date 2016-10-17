@@ -5,3 +5,4 @@ pymysql==0.6.7
 flask-sqlalchemy
 flask-migrate==1.6.0
 flask-script==2.0.5
+bcrypt
