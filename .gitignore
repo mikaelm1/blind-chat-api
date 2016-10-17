@@ -8,6 +8,8 @@ build
 *.egg
 *.egg-info
 _mailinglist
+__pycache__
+.metadata
 .tox
 .cache/
 .idea/

@@ -3,6 +3,7 @@ from flask_socketio import emit, join_room, leave_room
 
 from application import socketio
 from user.models import User
+from .models import Message 
 
 
 @socketio.on('connect')
