@@ -39,7 +39,9 @@ def on_join(data):
 	room = data["room"]
 	print("Attempting to join room " + str(room))
 	join_room(room)
-	emit({"room": str(room)}, room=room)
+	room_messages= Message.query.filter_by(room=room)
+	room_messages_json = [msg.serialize() for msg in room_messages]
+	emit("room_messages", {"room": room, "messages": room_messages_json}, room=room)
 
 @socketio.on('leave')
 def on_leave(data):
