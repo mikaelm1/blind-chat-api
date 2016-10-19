@@ -66,6 +66,22 @@ def handle_room_message(data):
 		emit("new_room_message", {"message": content}, room=room)
 
 
+@socketio.on('start_typing_in_room')
+def handle_typing_update(data):
+	room = data.get("room")
+	username = data.get("username")
+	#print(str(username) + " is typing in room " + str(room))
+	if room and username:
+		emit("started_typing", {"user": username}, room=room)
+
+
+@socketio.on('end_typing_in_room')
+def handle_end_typing(data):
+	room = data.get("room")
+	username = data.get("username")
+	print(str(username) + " finished typing in room " + str(room))
+	if room and username:
+		emit("ended_typing", {"user": username}, room=room)
 
 
 
