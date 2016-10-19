@@ -1,7 +1,7 @@
 from flask import jsonify 
 from flask_socketio import emit, join_room, leave_room 
 
-from application import socketio
+from application import socketio, db 
 from user.models import User
 from .models import Message 
 
@@ -43,6 +43,7 @@ def on_join(data):
 	room_messages_json = [msg.serialize() for msg in room_messages]
 	emit("room_messages", {"room": room, "messages": room_messages_json}, room=room)
 
+
 @socketio.on('leave')
 def on_leave(data):
 	room = data["room"]
@@ -50,11 +51,19 @@ def on_leave(data):
 	leave_room(room)
 	emit({"room": str(room)}, room=room)
 
+
 @socketio.on('room_message')
 def handle_room_message(data):
 	room = data["room"]
-	message = data["message"]
-	emit("new_room_message", {"message": message}, room=room)
+	content = data["message"]
+	username = data["user"]
+	if room and content and username:
+		user = User.query.filter_by(username=username).first()
+		if user:
+			message_to_save = Message(content=content, author=user, room=room)
+			db.session.add(message_to_save)
+			db.session.commit()
+		emit("new_room_message", {"message": content}, room=room)
 
 
 

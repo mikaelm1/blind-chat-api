@@ -19,7 +19,7 @@ def upgrade():
     op.create_table('message',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content', sa.String(length=250), nullable=True),
-    sa.Column('created', sa.DateTime(), nullable=True),
+    sa.Column('created', sa.Integer(), nullable=True),
     sa.Column('author_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['author_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')

@@ -4,7 +4,7 @@ from util.common import utc_now_ts as timestamp
 class Message(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	content = db.Column(db.String(250))
-	created = db.Column(db.DateTime)
+	created = db.Column(db.Integer)
 	author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	room = db.Column(db.String(50))
 
