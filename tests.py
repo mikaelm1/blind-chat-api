@@ -2,6 +2,7 @@ import os, sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import unittest 
+import sqlalchemy
 from flask_sqlalchemy import SQLAlchemy 
 
 from application import app, db 
@@ -33,6 +34,24 @@ class UserTest(unittest.TestCase):
 		conn.execute("commit")
 		conn.execute("DROP DATABASE " + app.config["BLOG_DATABASE_NAME"])
 		conn.close()
+
+
+	def user_dict(self):
+		return dict(
+			username="Becca",
+			email="becca@example.com",
+			password="testing"
+			)
+
+	def test_register_user(self):
+		# basic registration
+		rv = self.app.post('/register', data=self.user_dict(), follow_redirects=True)
+		assert User.query.filter_by(username=self.user_dict()["username"]).count() == 1
+		
+		# invalid: Same user registering
+		user2 = self.user_dict()
+		rv = self.app.post('/register', data=user2)
+		assert "user already exists" in str(rv.data).lower()
 
 
 
