@@ -54,6 +54,23 @@ class UserTest(unittest.TestCase):
 		assert "user already exists" in str(rv.data).lower()
 
 
+	def test_login_user(self):
+		# create user
+		self.app.post('/register', data=self.user_dict())
+		# login
+		rv = self.app.post('/login', data=dict(
+			username=self.user_dict()["username"],
+			password=self.user_dict()["password"]
+			))
+		assert "successfully logged in" in str(rv.data).lower()
+		# login with wrong password
+		user2 = self.user_dict()
+		user2["password"] = "wrong"
+		rv = self.app.post('/login', data=user2)
+		assert "password or username is wrong" in str(rv.data).lower()
+		
+
+
 
 if __name__ == '__main__':
 	unittest.main()

@@ -21,12 +21,8 @@ def login():
 			print("Password matches")
 			return jsonify({"response": "Successfully logged in"}), 200
 		else:
-			print("Password doesn't match")
-			return jsonify({"response": "Password or username doesn't match"}), 404 
-		# if user and user.username == username and user.password == password:
-		# 	return jsonify({"response": "Successfully logged in"}), 200
-		# else:
-		# 	return 404 
+			#print("Password doesn't match")
+			return jsonify({"response": "Password or username is wrong"}), 404 
 	return 500
 
 
