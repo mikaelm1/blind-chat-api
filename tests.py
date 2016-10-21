@@ -5,8 +5,9 @@ import unittest
 import sqlalchemy
 from flask_sqlalchemy import SQLAlchemy 
 
-from application import app, db 
+from application import app, db, socketio  
 from user.models import User 
+from chat.models import Message 
 
 
 class UserTest(unittest.TestCase):
@@ -26,6 +27,7 @@ class UserTest(unittest.TestCase):
 		db.create_all()
 		conn.close()
 		self.app = app.test_client()
+		#self.socket_app = socketio.test_client(self.app)
 
 	def tearDown(self):
 		db.session.remove()

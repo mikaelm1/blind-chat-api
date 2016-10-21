@@ -1,5 +1,6 @@
 from application import db 
 from util.common import utc_now_ts as timestamp
+from user.models import User 
 
 class Message(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -18,8 +19,11 @@ class Message(db.Model):
 		return "<Message %r>" % self.content
 
 	def serialize(self):
+		user = User.query.filter_by(id=self.author_id).first()
 		return {
 			"content": self.content,
 			"room": self.room,
-			"created": str(self.created)
+			"created": str(self.created),
+			"username": user.username
 		}
+

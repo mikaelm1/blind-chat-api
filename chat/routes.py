@@ -1,10 +1,15 @@
-from flask import jsonify 
+from flask import jsonify, session  
 from flask_socketio import emit, join_room, leave_room 
 
 from application import socketio, db 
 from user.models import User
+from user.decorators import login_required 
 from .models import Message 
 
+
+@socketio.on_error()
+def error_handler(e):
+	print("Error " + str(e))
 
 @socketio.on('connect')
 def connect():
@@ -63,7 +68,7 @@ def handle_room_message(data):
 			message_to_save = Message(content=content, author=user, room=room)
 			db.session.add(message_to_save)
 			db.session.commit()
-		emit("new_room_message", {"message": content}, room=room)
+		emit("new_room_message", {"message": message_to_save.content, "timestamp": message_to_save.created, "user": user.username}, room=room)
 
 
 @socketio.on('start_typing_in_room')

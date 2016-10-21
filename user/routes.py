@@ -5,16 +5,16 @@ from user.models import User
 
 @app.route('/')
 def root():
-	print("Hitting the root")
 	return jsonify({"result": {"message": "You have reached the root"}})
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	print("Request in login route: " + str(request.form))
-	print("SESSION: " + str(session))
 	username = request.form.get('username')
 	password = request.form.get('password')
+	session["username"] = username
+	print("SESSION: " + str(session))
 	if username and password:
 		user = User.query.filter_by(username=username).first()
 		if user.authenticated(password):
