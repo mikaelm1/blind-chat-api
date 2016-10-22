@@ -68,7 +68,7 @@ def handle_room_message(data):
 			message_to_save = Message(content=content, author=user, room=room)
 			db.session.add(message_to_save)
 			db.session.commit()
-		emit("new_room_message", {"message": message_to_save.content, "timestamp": message_to_save.created, "user": user.username}, room=room)
+		emit("new_room_message", {"message": message_to_save.serialize()}, room=room)
 
 
 @socketio.on('start_typing_in_room')
