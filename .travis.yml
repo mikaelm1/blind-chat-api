@@ -1,10 +1,10 @@
 language: python
 python:
-  - "3.4"
-  - "3.5"
-
-# command to install dependencies
+- '3.4'
+- '3.5'
 install:
-  - pip install -r requirements.txt
-# command to run tests
-script: python tests.py 
+- pip install -r requirements.txt
+script: python tests.py
+before_install:
+- openssl aes-256-cbc -K $encrypted_f7509cdb07fb_key -iv $encrypted_f7509cdb07fb_iv
+  -in settings.py.enc -out settings.py -d
